@@ -1,5 +1,6 @@
+
 <a href="{{route('item.create')}}"> Add New </a>
-<table border="1" height=30' width='300'>
+<table border="1" height='40' width='500' >
     <tr>
         <th>Category_id</th>
         <th>Name</th>
