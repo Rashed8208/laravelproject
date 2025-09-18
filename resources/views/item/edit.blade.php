@@ -1,30 +1,40 @@
-  
-  <form action="{{route('item.update',$item->id)}}" method="post">
-@csrf
-@method('PATCH')
-    <div> 
-        <label for="category_id">Category_id</label>
-        <input type="text" name="category_id" id="category_id", value="{{$item->category_id}}">
-    </div>
-     <div> 
-        <label for="name">Name</label>
-        <input type="text" name="name" id="name", value="{{$item->name}}">
-    </div>
-     <div> 
-        <label for="description">Description</label>
-        <input type="text" name="description" id="description", value="{{$item->description}}">
-    </div>
-     <div> 
-        <label for="price">Price</label>
-        <input type="integer" name="price" id="price", value="{{$item->price}}">
-    </div>
-    <div> 
-        <label for="stock_qty">Stock_qty</label>
-        <input type="integer" name="stock_qty" id="stock_qty", value="{{$item->stock_qty}}">
-    </div>
-        
-      <div>
-        <button type="submit">Update</button>
-      </div>
+@extends('layouts.backend')
+@section('page_title',"Item Add")
+@section('content')
+<div class="container">
+    <h2 class="mb-4">Edit Item</h2>
 
-</from>
+    <form action="{{ route('item.update', $item->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+
+        <div class="mb-3">
+            <label class="form-label">Category ID</label>
+            <input type="text" name="category_id" value="{{ old('category_id', $item->category_id) }}" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" name="name" value="{{ old('name', $item->name) }}" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-control">{{ old('description', $item->description) }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Price</label>
+            <input type="number" name="price" value="{{ old('price', $item->price) }}" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Stock Qty</label>
+            <input type="number" name="stock_qty" value="{{ old('stock_qty', $item->stock_qty) }}" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="{{ route('item.index') }}" class="btn btn-secondary btn-danger">Cancel</a>
+    </form>
+</div>
+@endsection

@@ -1,17 +1,26 @@
-  
-  <form action="{{route('item_tag.update',$item_tag->id)}}" method="post">
-@csrf
-@method('PATCH')
-    <div> 
-        <label for="item_id">Item_id</label>
-        <input type="text" name="item_id" id="item_id", value="{{$item_tag->item_id}}">
-    </div>
-     <div> 
-        <label for="tag_id">Tag_id</label>
-        <input type="text" name="tag_id" id="tag_id", value="{{$item_tag->tag_id}}">
-    </div>
-      <div>
-        <button type="submit">Update</button>
-      </div>
+@extends('layouts.backend')
+@section('page_title',"Item Add")
+@section('content')
+ 
+<div class="container">
+    <h2 class="mb-4">Edit Item Tag</h2>
 
-</from>
+    <form action="{{ route('item_tag.update', $item_tag->id) }}" method="POST">
+        @csrf
+        @method('PATCH')
+
+        <div class="mb-3">
+            <label class="form-label">Item ID</label>
+            <input type="number" name="item_id" value="{{ old('item_id', $item_tag->item_id) }}" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Tag ID</label>
+            <input type="number" name="tag_id" value="{{ old('tag_id', $item_tag->tag_id) }}" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="{{ route('item_tag.index') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+@endsection
