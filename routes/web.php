@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\front;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +28,7 @@ Route::get('/', function () {
 }); 
  Route::middleware('auth:web')->group(function(){
  Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
+ Route::get('about',[front::class, 'about'])->name('about');
  Route:: resource('tag',TagController::class);
  Route:: resource('category',CategoryController::class);
  Route:: resource('item',ItemController::class);
