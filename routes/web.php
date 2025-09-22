@@ -29,6 +29,11 @@ Route::get('/', function () {
  Route::middleware('auth:web')->group(function(){
  Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
  Route::get('about',[front::class, 'about'])->name('about');
+ Route::get('electronic',[front::class, 'electronic'])->name('electronic');
+ Route::get('cloth',[front::class, 'cloth'])->name('cloth');
+  Route::get('furniture',[front::class, 'furniture'])->name('furniture');
+
+ 
  Route:: resource('tag',TagController::class);
  Route:: resource('category',CategoryController::class);
  Route:: resource('item',ItemController::class);
