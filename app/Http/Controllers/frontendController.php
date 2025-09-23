@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class front extends Controller
+class frontendController extends Controller
 {
     function welcome() {
         return view('welcome');
     }
     function about(){
         return view('about');
+    }
+     function product(){
+        return view('product');
     }
     function electronic(){
         return view('electronic');
@@ -20,5 +23,8 @@ class front extends Controller
     }
     function furniture(){
         return view('furniture');
+    }
+    function blog(){
+        return view('blog');
     }
 }

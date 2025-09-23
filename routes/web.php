@@ -11,7 +11,7 @@ use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\front;
+use App\Http\Controllers\frontendController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,10 +28,12 @@ Route::get('/', function () {
 }); 
  Route::middleware('auth:web')->group(function(){
  Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
- Route::get('about',[front::class, 'about'])->name('about');
- Route::get('electronic',[front::class, 'electronic'])->name('electronic');
- Route::get('cloth',[front::class, 'cloth'])->name('cloth');
-  Route::get('furniture',[front::class, 'furniture'])->name('furniture');
+ Route::get('about',[frontendController::class, 'about'])->name('about');
+ Route::get('product',[frontendController::class, 'product'])->name('product');
+ Route::get('electronic',[frontendController::class, 'electronic'])->name('electronic');
+ Route::get('cloth',[frontendController::class, 'cloth'])->name('cloth');
+ Route::get('furniture',[frontendController::class, 'furniture'])->name('furniture');
+  Route::get('blog',[frontendController::class, 'blog'])->name('blog');
 
  
  Route:: resource('tag',TagController::class);
