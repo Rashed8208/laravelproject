@@ -32,6 +32,10 @@
             <label class="form-label">Stock Qty</label>
             <input type="number" name="stock_qty" value="{{ old('stock_qty') }}" class="form-control">
         </div>
+         <div class="form-group">
+                    <label>Image</label>
+                    <input type="file" name="image" value="{{ old('image') }}" class="form-control">
+                </div>
 
         <button type="submit" class="btn btn-success">Save</button>
         <a href="{{ route('item.index') }}" class="btn btn-secondary btn-danger">Delete</a>

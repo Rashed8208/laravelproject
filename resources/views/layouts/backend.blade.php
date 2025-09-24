@@ -59,6 +59,7 @@
                                     <li><a href="{{route('item.index')}}">Item</a></li>
                                     <li><a href="{{route('item_tag.index')}}">Item Tag</a></li>
                                     <li><a href="{{route('order_item.index')}}">Order Item</a></li>
+                                    <li><a href="{{route('coupon.index')}}">Coupon</a></li>
                                     <li><a href="{{route('order.index')}}">Order</a></li>
                                     <li><a href="{{route('notification.index')}}">Notification</a></li>
                                     <li><a href="{{route('review.index')}}">Review</a></li>

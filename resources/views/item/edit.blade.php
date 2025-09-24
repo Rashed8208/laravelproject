@@ -32,6 +32,13 @@
             <label class="form-label">Stock Qty</label>
             <input type="number" name="stock_qty" value="{{ old('stock_qty', $item->stock_qty) }}" class="form-control">
         </div>
+         <div class="form-group">
+                    <label>Image</label><br>
+                    @if($item->image)
+                        <img src="{{ asset('uploads/'.$item->image) }}" width="80" height="80" alt="Image"><br><br>
+                    @endif
+                    <input type="file" name="image" class="form-control">
+                </div>
 
         <button type="submit" class="btn btn-primary">Save</button>
         <a href="{{ route('item.index') }}" class="btn btn-secondary btn-danger">Cancel</a>

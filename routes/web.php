@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\frontendController;
 /*
 |--------------------------------------------------------------------------
@@ -23,10 +24,7 @@ use App\Http\Controllers\frontendController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-}); 
- Route::middleware('auth:web')->group(function(){
+ Route::get('/',[frontendController::class,'home'])->name ('home');
  Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
  Route::get('about',[frontendController::class, 'about'])->name('about');
  Route::get('product',[frontendController::class, 'product'])->name('product');
@@ -34,8 +32,9 @@ Route::get('/', function () {
  Route::get('cloth',[frontendController::class, 'cloth'])->name('cloth');
  Route::get('furniture',[frontendController::class, 'furniture'])->name('furniture');
   Route::get('blog',[frontendController::class, 'blog'])->name('blog');
-
- 
+  
+Auth::routes();
+Route::middleware('auth:web')->group(function(){
  Route:: resource('tag',TagController::class);
  Route:: resource('category',CategoryController::class);
  Route:: resource('item',ItemController::class);
@@ -45,8 +44,9 @@ Route::get('/', function () {
  Route:: resource('order_item',OrderItemController::class);
  Route:: resource('notification',NotificationController::class);
  Route:: resource('review',ReviewController::class);
+ Route:: resource('coupon',CouponController::class);
  Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
-Auth::routes();
+
 
 

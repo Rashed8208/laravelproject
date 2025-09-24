@@ -21,6 +21,7 @@
                             <th scope="col">Description</th>
                             <th scope="col">Price</th>
                             <th scope="col">Stock_qty</th>
+                            <th scope="col">Image</th>
                             <th scope="col">Action</th>
                         </tr>
                      </thead>  
@@ -33,6 +34,13 @@
                                 <td>{{$d->description}}</td>
                                 <td>{{$d->price}}</td>
                                 <td>{{$d->stock_qty}}</td>
+                                <td>
+                                    @if($d->image)
+                                        <img src="{{ asset('uploads/'.$d->image) }}" width="60" height="60" alt="Image">
+                                    @else
+                                        <span class="text-muted">No Image</span>
+                                    @endif
+                                </td>
                                     <td>
                                 <a href="{{ route('item.edit', $d->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                 <form action="{{ route('item.destroy', $d->id) }}" method="POST" style="display:inline;">
