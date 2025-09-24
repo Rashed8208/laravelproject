@@ -28,7 +28,7 @@
                     <td>
                         <span class="badge bg-info">{{$d->rating }}</span>
                     </td>
-                    <td>{{$d->comment }}</td>
+                    <td>{{$d->comment}}</td>
                     <td>
                         <a href="{{ route('review.edit', $d->id) }}" class="btn btn-sm btn-primary">Edit</a>
                         <form action="{{ route('review.destroy',$d->id) }}" method="POST" style="display:inline;">
