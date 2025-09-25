@@ -5,12 +5,20 @@
 <div class="container">
     <h2 class="mb-4">Add Item</h2>
 
-    <form action="{{ route('item.store') }}" method="POST">
+    <form action="{{ route('item.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-3">
             <label class="form-label">Category ID</label>
-            <input type="text" name="category_id" value="{{ old('category_id') }}" class="form-control">
+            <select name="category_id" class="form-control">
+                <option value="">Select Category</option>
+                @forelse ($category as $c)
+                    <option value="{{$c->id}}">{{$c->name}}</option>
+                @empty
+
+                @endforelse
+            </select>
+            
         </div>
 
         <div class="mb-3">

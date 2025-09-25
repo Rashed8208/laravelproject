@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\item;
 
 class frontendController extends Controller
 {
     function home() {
-        return view('home');
+        $items=item::get();
+        return view('home',compact('items'));
     }
     function about(){
         return view('about');

@@ -4,13 +4,20 @@
 <div class="container">
     <h2 class="mb-4">Edit Item</h2>
 
-    <form action="{{ route('item.update', $item->id) }}" method="POST">
+    <form action="{{ route('item.update', $item->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
         <div class="mb-3">
             <label class="form-label">Category ID</label>
-            <input type="text" name="category_id" value="{{ old('category_id', $item->category_id) }}" class="form-control">
+            <select name="category_id" class="form-control">
+                  <option value="">Select Category</option>
+                  @forelse ($category as $c)
+                      <option value="{{$c->id}}" @if($c->id==$item->category_id) selected @endif>{{$c->name}}</option>
+                  @empty
+
+                  @endforelse
+                </select>
         </div>
 
         <div class="mb-3">

@@ -266,18 +266,14 @@
                                         }
                                     }
                                 }'>
-                                <div class="product">
-                                    @forelse ( $item)
+                            @forelse ( $items as $item)
+                            <div class="product">
                                     <figure class="product-media">
-                                        <span class="product-label label-sale">Sale</span>
                                         <a href="product.html">
-                                            <img src="{{asset('uploads/'.$product->image)}}" alt="" class="product-image">
+                                            <img src="{{asset('uploads/'.$item->image)}}" alt="Product image" class="product-image">
                                         </a>
 
                                         <div class="product-action-vertical">
-                                            <h4 class="mb-3">{{$item->name}}</h4>
-                                            <p>{{$item->description}}</p>
-                                               <h4 class="text-primary">BDT{{$item->price}}</h4>
                                             <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
                                             <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
                                             <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
@@ -290,22 +286,24 @@
 
                                     <div class="product-body">
                                         <div class="product-cat">
-                                            <a href="#">Furniture</a>
+                                            <a href="#">{{$item->category?->name}}</a>
                                         </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">Butler Stool Ladder</a></h3><!-- End .product-title -->
+                                        <h3 class="product-title"><a href="product.html">{{$item->name}}</a></h3><!-- End .product-title -->
                                         <div class="product-price">
-                                            <span class="new-price">$251.99</span>
-                                            <span class="old-price">Was $290.00</span>
+                                            <span class="new-price">BDT {{$item->price}}</span>
                                         </div><!-- End .product-price -->
                                         <div class="ratings-container">
                                             <div class="ratings">
                                                 <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
                                             </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 2 Reviews )</span>
+                                            <span class="ratings-text">( 4 Reviews )</span>
                                         </div><!-- End .rating-container -->
+
+                                        
                                     </div><!-- End .product-body -->
                                 </div><!-- End .product -->
-                                  @empty
+                                
+                            @empty
 
                            @endforelse
                                 <div class="product">

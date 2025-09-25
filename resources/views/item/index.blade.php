@@ -29,7 +29,7 @@
                             @forelse ($data as $i=>$d)
                             <tr>
                                 <td scope="row">{{++$i}}</td>
-                                <td>{{$d->category_id}}</td>
+                                <td>{{$d->category?->name}}</td>
                                 <td>{{$d->name}}</td>
                                 <td>{{$d->description}}</td>
                                 <td>{{$d->price}}</td>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\item;
+use App\Models\category;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -21,7 +22,8 @@ class ItemController extends Controller
      */
     public function create()
     {
-       return view('item.create'); 
+          $category=category::get();
+          return view('item.create',compact('category')); 
     }
 
     /**
@@ -29,7 +31,14 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-         Item::create($request->all());
+          $input=$request->all();
+          if($request->hasFile('image')){
+               $fileName = time().'.'.$request->image->extension();  
+               $request->image->move(public_path('uploads'), $fileName);
+               $input['image']=$fileName;
+          }
+
+        Item::create($input);
       return redirect()->route('item.index');
     }
 
@@ -46,7 +55,8 @@ class ItemController extends Controller
      */
     public function edit(item $item)
     {
-         return view('item.edit',compact('item'));
+          $category=category::get();
+         return view('item.edit',compact('item','category'));
     }
 
     /**
@@ -54,7 +64,14 @@ class ItemController extends Controller
      */
     public function update(Request $request, item $item)
     {
-         $item->update($request->all());
+     $input=$request->all();
+          if($request->hasFile('image')){
+               $fileName = time().'.'.$request->image->extension();  
+               $request->image->move(public_path('uploads'), $fileName);
+               $input['image']=$fileName;
+          }
+
+         $item->update($input);
       return redirect()->route('item.index');
     }
 
