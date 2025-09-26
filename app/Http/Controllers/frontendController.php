@@ -29,4 +29,7 @@ class frontendController extends Controller
     function blog(){
         return view('blog');
     }
+     function cart(){
+        return view('cart');
+    }
 }
