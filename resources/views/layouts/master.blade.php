@@ -120,11 +120,9 @@
                                     <ul class="compare-products">
                                         <li class="compare-product">
                                             <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                            <h4 class="compare-product-title"><a href="product.html">Blue Night Dress</a></h4>
                                         </li>
                                         <li class="compare-product">
                                             <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                            <h4 class="compare-product-title"><a href="product.html">White Long Skirt</a></h4>
                                         </li>
                                     </ul>
 
@@ -157,26 +155,21 @@
                             </li>
                                 <li>
                                 <a href="{{route('product')}}" class="nav-item nav-link">Products</a>
-                                    </li>
+                            </li>
 
                             </li>
                             <li>
-                                <a href="#" class="sf-with-ul">Pages</a>
+                               <a href="{{route('electronic')}}" class="nav-item nav-link">Electronic</a>
+                               </li>
+                                <li>
+                                <a href="{{route('cloth')}}" class="nav-item nav-link">Cloth</a>
+                                </li>
+                                <li>
+                                <a href="{{route('furniture')}}" class="nav-item nav-link">Furniture</a>
+                                </li>
 
-                                <ul>
-                                    <li>
-                                        <a href="{{route('electronic')}}" class="nav-item nav-link"><h5>Electronic</h5></a>
-                                    </li>
-                                        <li>
-                                        <a href="{{route('cloth')}}" class="nav-item nav-link"><h5>Cloth</h5></a>
-                                        </li>
-                                        <li>
-                                        <a href="{{route('furniture')}}" class="nav-item nav-link"><h5>Furniture</h5></a>
-                                        </li>
-
-                                    </ul>
-                                    <li>
-                                    <a href="{{route('blog')}}" class="nav-item nav-link">Blog</a>
+                               <li>
+                                <a href="{{route('blog')}}" class="nav-item nav-link">Blog</a>
                             </li>
                              <li>
                                 <a href="{{route('checkout')}}" class="bi bi-basket">Checkout</a>
@@ -186,7 +179,7 @@
                             </li>
                         </li>
                             
-                                
+                     </ul>         
                     </nav><!-- End .main-nav -->
                 </div><!-- End .col-lg-9 -->
             </div><!-- End .container -->
