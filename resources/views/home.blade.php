@@ -168,7 +168,7 @@
                     <div class="col-sm-6 col-lg-3">
                         <div class="banner banner-overlay">
                             <a href="#">
-                                <img src="{{asset('assets/images/demos/demo-13/banners/banner-1.jpg')}}"')}} alt="Banner">
+                                <img src="{{asset('assets/images/demos/demo-13/banners/banner-1.jpg')}}" alt="Banner">
                             </a>
 
                             <div class="banner-content">
@@ -280,7 +280,7 @@
                                         </div><!-- End .product-action-vertical -->
 
                                         <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                            <button type="button" onclick="addToCart({{$item->id}})" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></button>
                                         </div><!-- End .product-action -->
                                     </figure><!-- End .product-media -->
 
@@ -3996,3 +3996,29 @@
     
 </body>
 @endsection
+  @push('scripts')
+    <script>
+        function addToCart(itemId) {
+            // Implement the logic to add the product to the cart
+            // You might want to make an AJAX request to your server here
+            fetch("{{ route('cart.add') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ item_id: itemId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                //console.log('Success:', data);
+                alert('Product added to cart!');
+            })
+            .catch((error) => {
+                //console.error('Error:', error);
+                alert('Failed to add product to cart.');
+            });
+
+        }
+    </script>
+@endpush

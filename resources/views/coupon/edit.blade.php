@@ -4,7 +4,7 @@
 <div class="container">
     <h2>Edit Coupon</h2>
 
-    <form action="{{ route('coupons.update', $coupon->id) }}" method="POST">
+    <form action="{{ route('coupon.update', $coupon->id) }}" method="POST">
         @csrf @method('PUT')
 
         <div class="form-group mb-3">
@@ -59,7 +59,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{{ route('coupons.index') }}" class="btn btn-secondary">Back</a>
+        <a href="{{ route('coupon.index') }}" class="btn btn-secondary">Back</a>
     </form>
 </div>
 @endsection

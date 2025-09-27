@@ -34,9 +34,13 @@ use App\Http\Controllers\CheckoutController;
       Route::get('cloth',[frontendController::class, 'cloth'])->name('cloth');
       Route::get('furniture',[frontendController::class, 'furniture'])->name('furniture');
       Route::get('blog',[frontendController::class, 'blog'])->name('blog');
-      Route::get('cart',[CartController::class, 'cart'])->name('cart');
+      Route::get('cart',[CartController::class,'viewCart'])->name('cart.view');
+      Route::post('cart/add',[CartController::class,'addToCart'])->name('cart.add');
+      Route::post('cart/update',[CartController::class,'updateCart'])->name('cart.update');
+      Route::get('cart/remove/{id}',[CartController::class,'removeFromCart'])->name('cart.remove');
+      Route::post('cart/check_coupon',[CartController::class,'checkCoupon'])->name('cart.check_coupon');
       Route::get('checkout',[CheckoutController::class, 'checkout'])->name('checkout');
-
+      Route::post('checkout/place_order',[CheckoutController::class,'placeOrder'])->name('checkout.place_order');
 
         Auth::routes();
       Route::middleware('auth:web')->group(function(){

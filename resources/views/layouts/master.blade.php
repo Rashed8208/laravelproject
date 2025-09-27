@@ -1,6 +1,3 @@
-
-
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +6,7 @@
     <meta name="keywords" content="HTML5 Template">
     <meta name="description" content="Molla - Bootstrap eCommerce Template">
     <meta name="author" content="p-themes">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('assets/images/icons/apple-touch-icon.png')}}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('assets/images/icons/favicon-32x32.png')}}">
@@ -135,82 +133,13 @@
                                         <a href="#" class="btn btn-outline-primary-2"><span>Compare</span><i class="icon-long-arrow-right"></i></a>
                                     </div>
                                 </div><!-- End .dropdown-menu -->
-                            </div><!-- End .compare-dropdown -->
-
-                            <a href="wishlist.html" class="wishlist-link">
-                                <i class="icon-heart-o"></i>
-                                <span class="wishlist-count">3</span>
-                                <span class="wishlist-txt">Wishlist</span>
-                            </a>
-
-                            <div class="dropdown cart-dropdown">
-                                <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                    <i class="icon-shopping-cart"></i>
-                                    <span class="cart-count">2</span>
-                                    <span class="cart-txt">Cart</span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <div class="dropdown-cart-products">
-                                        <div class="product">
-                                            <div class="product-cart-details">
-                                                <h4 class="product-title">
-                                                    <a href="product.html">Beige knitted elastic runner shoes</a>
-                                                </h4>
-
-                                                <span class="cart-product-info">
-                                                    <span class="cart-product-qty">1</span>
-                                                    x $84.00
-                                                </span>
-                                            </div><!-- End .product-cart-details -->
-
-                                            <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-                                                    <img src="assets/images/products/cart/product-1.jpg" alt="product">
-                                                </a>
-                                            </figure>
-                                            <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                        </div><!-- End .product -->
-
-                                        <div class="product">
-                                            <div class="product-cart-details">
-                                                <h4 class="product-title">
-                                                    <a href="product.html">Blue utility pinafore denim dress</a>
-                                                </h4>
-
-                                                <span class="cart-product-info">
-                                                    <span class="cart-product-qty">1</span>
-                                                    x $76.00
-                                                </span>
-                                            </div><!-- End .product-cart-details -->
-
-                                            <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-                                                    <img src="assets/images/products/cart/product-2.jpg" alt="product">
-                                                </a>
-                                            </figure>
-                                            <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                        </div><!-- End .product -->
-                                    </div><!-- End .cart-product -->
-
-                                    <div class="dropdown-cart-total">
-                                        <span>Total</span>
-
-                                        <span class="cart-total-price">$160.00</span>
-                                    </div><!-- End .dropdown-cart-total -->
-
-                                    <div class="dropdown-cart-action">
-                                        <a href="{{route('cart')}}" class="nav-item nav-link">View Cart</a>
-                                        <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
-                                    </div><!-- End .dropdown-cart-total -->
-                                </div><!-- End .dropdown-menu -->
+                                </div><!-- End .compare-dropdown -->
                             </div><!-- End .cart-dropdown -->
                         </div>
                     </div><!-- End .header-right -->
-                </div><!-- End .container -->
-            </div><!-- End .header-middle -->
+                
         <div class="header-bottom sticky-header">
-     <div class="container">
+            <div class="container">
                 <div class="col-sm-12 col-lg-6">
                   <div class="header-right">
                     <div class="dropdown category-dropdown show is-on" data-visible="true">
@@ -248,6 +177,12 @@
                                     </ul>
                                     <li>
                                     <a href="{{route('blog')}}" class="nav-item nav-link">Blog</a>
+                            </li>
+                             <li>
+                                <a href="{{route('checkout')}}" class="bi bi-basket">Checkout</a>
+                            </li>
+                                <li>
+                                <a href="{{route('cart.view')}}" class="nav-item nav-link icon-shopping-cart">Cart</a>
                             </li>
                         </li>
                             
@@ -350,5 +285,6 @@
                 </div><!-- End .container -->
             </div><!-- End .footer-bottom -->
          @stack('scripts')
+         </footer>
  </body>
-</footer>
+
