@@ -15,6 +15,8 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\frontendController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\Auth\CustomerLoginController;
+use App\Http\Controllers\Auth\CustomerRegisterController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,7 +44,7 @@ use App\Http\Controllers\CheckoutController;
       Route::get('checkout',[CheckoutController::class, 'checkout'])->name('checkout');
       Route::post('checkout/place_order',[CheckoutController::class,'placeOrder'])->name('checkout.place_order');
 
-        Auth::routes();
+      Auth::routes();
       Route::middleware('auth:web')->group(function(){
       Route:: resource('tag',TagController::class);
       Route:: resource('category',CategoryController::class);
@@ -56,6 +58,21 @@ use App\Http\Controllers\CheckoutController;
       Route:: resource('coupon',CouponController::class);
       
       });
+      // Customer Authentication Routes
+    Route::prefix('customer')->group(function () {
+    Route::get('login', [CustomerLoginController::class, 'showLoginForm'])->name('customer.login');
+    Route::post('login', [CustomerLoginController::class, 'login'])->name('customer.login.submit');
+    Route::get('register', [CustomerRegisterController::class, 'showRegistrationForm'])->name('customer.register');
+    Route::post('register', [CustomerRegisterController::class, 'register'])->name('customer.register.submit');
+    Route::post('logout', [CustomerLoginController::class, 'logout'])->name('customer.logout');
+    
+    // Protected customer routes
+    Route::middleware('auth:customer')->group(function () {
+        Route::get('/dashboard', function () {
+            return view('customer.dashboard');
+        })->name('customer.dashboard');
+    });
+});
 
 
 

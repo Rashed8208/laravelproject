@@ -71,6 +71,32 @@
                 </div>
             </div>
         </nav>
+        <!-- Right Side Of Navbar -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Guest Links -->
+                @guest('customer')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('customer.login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('customer.register') }}">Register</a>
+                    </li>
+                @else
+                    <!-- Authenticated Links -->
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Auth::guard('customer')->user()->name }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('customer.dashboard') }}">Dashboard</a>
+                            <form method="POST" action="{{ route('customer.logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Logout</button>
+                            </form>
+                        </div>
+                    </li>
+                @endguest
+            </ul>
 
         <main class="py-4">
             @yield('content')

@@ -10,3 +10,13 @@ class customer extends Model
     use HasFactory;
     protected $fillable=['name','email','password','phone','address','city','district','post_code'];
 }
+
+
+//  protected $fillable = [
+//         'name', 'email', 'password',
+//     ];
+    
+//     protected $hidden = [
+//         'password', 'remember_token',
+//     ]; 
+    
