@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('coupon_id')->nullable();
             $table->bigInteger('customer_id')->nullable();
             $table->string('status')->nullable();
-            $table->string('payment_method')->nullable();
-            $table->decimal('vat')->nullable();
-            $table->decimal('discount')->nullable();
-            $table->decimal('shipping_charge')->nullable();
-            $table->decimal('total')->nullable();
+            $table->decimal('discount_amount')->nullable();
+            $table->decimal('total_price',10,2)->nullable();
+            $table->decimal('final_price',10,2)->nullable();
+            $table->bigInteger('district_id')->nullable();
+            $table->bigInteger('division_id')->nullable();
+            $table->text('notes')->nullable();
+            $table->text('address')->nullable();
             $table->timestamps();
         });
     }

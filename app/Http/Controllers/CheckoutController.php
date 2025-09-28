@@ -62,7 +62,7 @@ class CheckoutController extends Controller
             return redirect()->back()->with('error', 'Your cart is empty!');
         }
         $order=new Order();
-        $order->user_id=$customer->id;
+        $order->customer_id=$customer->id;
         $order->total_price=array_sum(array_map(function($item) {
             return $item['price'] * $item['quantity'];
         }, $cart));
@@ -83,9 +83,9 @@ class CheckoutController extends Controller
         $order->save();
         if($order) {
             foreach($cart as $id=>$item) {
-                $orderItem=new OrderItem();
+                $orderItem=new order_item();
                 $orderItem->order_id=$order->id;
-                $orderItem->product_id=$id;
+                $orderItem->item_id=$id;
                 $orderItem->quantity=$item['quantity'];
                 $orderItem->unit_price=$item['price'];
                 $orderItem->line_total=$item['price'] * $item['quantity'];

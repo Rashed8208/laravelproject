@@ -16,7 +16,7 @@
 
                         <tr>
                             <th scope="col">#SL</th>
-                            <th scope="col">Category_id</th>
+                            <th scope="col">Category</th>
                             <th scope="col">Name</th>
                             <th scope="col">Description</th>
                             <th scope="col">Price</th>

@@ -1,51 +1,73 @@
 @extends('layouts.backend')
-@section('page_title',"Order Add")
+
+@section('page_title', 'Create Order')
 @section('content')
 
-@section('content')
-<div class="container">
-    <h2 class="mb-4">Create Order</h2>
+<div class="container mt-4">
+    <h2>Create Order</h2>
 
     <form action="{{ route('order.store') }}" method="POST">
         @csrf
 
-        <div class="mb-3">
-            <label class="form-label">Customer ID</label>
-            <input type="number" name="customer_id" class="form-control" value="{{ old('customer_id') }}">
+        <div class="form-group mb-2">
+            <label>Coupon ID</label>
+            <input type="number" name="coupon_id" class="form-control">
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Status</label>
-            <input type="text" name="status" class="form-control" value="{{ old('status') }}">
+        <div class="form-group mb-2">
+            <label>Customer ID</label>
+            <input type="number" name="customer_id" class="form-control" required>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Payment Method</label>
-            <input type="text" name="payment_method" class="form-control" value="{{ old('payment_method') }}">
+        <div class="form-group mb-2">
+            <label>Status</label>
+            <select name="status" class="form-control">
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="shipped">Shipped</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="returned">Returned</option>
+            </select>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">VAT</label>
-            <input type="number" step="0.01" name="vat" class="form-control" value="{{ old('vat') }}">
+        <div class="form-group mb-2">
+            <label>Discount Amount</label>
+            <input type="number" step="0.01" name="discount_amount" class="form-control">
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Discount</label>
-            <input type="number" step="0.01" name="discount" class="form-control" value="{{ old('discount') }}">
+        <div class="form-group mb-2">
+            <label>Total Price</label>
+            <input type="number" step="0.01" name="total_price" class="form-control" required>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Shipping Charge</label>
-            <input type="number" step="0.01" name="shipping_charge" class="form-control" value="{{ old('shipping_charge') }}">
+        <div class="form-group mb-2">
+            <label>Final Price</label>
+            <input type="number" step="0.01" name="final_price" class="form-control" required>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Total</label>
-            <input type="number" step="0.01" name="total" class="form-control" value="{{ old('total') }}">
+        <div class="form-group mb-2">
+            <label>District ID</label>
+            <input type="number" name="district_id" class="form-control">
         </div>
 
-        <button type="submit" class="btn btn-success">Save</button>
-        <a href="{{ route('order.index') }}" class="btn btn-secondary">Cancel</a>
+        <div class="form-group mb-2">
+            <label>Division ID</label>
+            <input type="number" name="division_id" class="form-control">
+        </div>
+
+        <div class="form-group mb-2">
+            <label>Notes</label>
+            <textarea name="notes" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group mb-2">
+            <label>Address</label>
+            <textarea name="address" class="form-control" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success mt-2">Save</button>
+        <a href="{{ route('order.index') }}" class="btn btn-secondary mt-2">Back</a>
     </form>
 </div>
 @endsection

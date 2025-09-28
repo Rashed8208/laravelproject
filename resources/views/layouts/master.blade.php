@@ -172,10 +172,14 @@
                                 <a href="{{route('blog')}}" class="nav-item nav-link">Blog</a>
                             </li>
                              <li>
-                                <a href="{{route('checkout')}}" class="bi bi-basket">Checkout</a>
+                               <a href="{{route('checkout')}}" class="bi bi-basket">Checkout</a>
                             </li>
-                                <li>
-                                <a href="{{route('cart.view')}}" class="nav-item nav-link icon-shopping-cart">Cart</a>
+                            <li>
+                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+                            <a href="{{ route('cart.view') }}" class="nav-item nav-link">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            </a>
+
                             </li>
                         </li>
                             

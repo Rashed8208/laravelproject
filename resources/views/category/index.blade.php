@@ -15,8 +15,8 @@
                         <thead class="text-uppercase">
                             <tr>
                                 <th scope="col">#SL</th>
-                                <th scope="col">Name</th>
                                 <th scope="col">Type</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">action</th>
                             </tr>
                         </thead>
@@ -24,8 +24,9 @@
                             @forelse ($data as $i=>$d)
                             <tr>
                                 <th scope="row">{{++$i}}</th>
+                                 <td>{{$d->type}}</td>
                                 <td>{{$d->name}}</td>
-                                <td>{{$d->type}}</td>
+                               
                                 <td>
                                     <ul class="d-flex justify-content-center">
                                         <a href="{{ route('category.edit', $d->id) }}" class="btn btn-sm btn-primary">Edit</a>
@@ -53,25 +54,3 @@
 </div>
 <!-- Progress Table end -->
 @endsection
-<table border="1" height=30' width='300'>
- <tr>
-        <th>Name</th>
-         <th>Type</th>
-        <th>Action</th>
-    </tr>
-    @forelse ($data as $d)
-    <tr>
-        <td>{{$d->name}}</td>
-        <td>{{$d->type}}</td>
-        <td>
-             <a href="">Update </a>
-        
-
-        </td>
-        @empty
-        <tr>
-            <td>No Data Found</td>
-        </tr>
-    </tr>
-    @endforelse
-</table>
