@@ -47,8 +47,8 @@ class CheckoutController extends Controller
             $customer->email = $request->email;
             $customer->phone = $request->phone;
             $customer->address = $request->address;
-            $customer->division_id = $request->division_id;
-            $customer->district_id = $request->district_id;
+            $customer->city = $request->division_id;
+            $customer->district = $request->district_id;
             if($request->login && $request->password) {
                 $customer->password = bcrypt($request->password);
             }

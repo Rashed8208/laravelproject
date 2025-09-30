@@ -15,8 +15,8 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\frontendController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\Auth\CustomerLoginController;
-use App\Http\Controllers\Auth\CustomerRegisterController;
+// customer
+use App\Http\Controllers\Customer\CustomerAuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,7 +28,7 @@ use App\Http\Controllers\Auth\CustomerRegisterController;
 |
 */
 
-      Route::get('/',[frontendController::class,'home'])->name ('home');
+      Route::get('/',[frontendController::class,'home'])->name('home');
       Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
       Route::get('about',[frontendController::class, 'about'])->name('about');
       Route::get('product',[frontendController::class, 'product'])->name('product');
@@ -59,20 +59,20 @@ use App\Http\Controllers\Auth\CustomerRegisterController;
       
       });
       // Customer Authentication Routes
-    Route::prefix('customer')->group(function () {
-    Route::get('login', [CustomerLoginController::class, 'showLoginForm'])->name('customer.login');
-    Route::post('login', [CustomerLoginController::class, 'login'])->name('customer.login.submit');
-    Route::get('register', [CustomerRegisterController::class, 'showRegistrationForm'])->name('customer.register');
-    Route::post('register', [CustomerRegisterController::class, 'register'])->name('customer.register.submit');
-    Route::post('logout', [CustomerLoginController::class, 'logout'])->name('customer.logout');
-    
-    // Protected customer routes
-    Route::middleware('auth:customer')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('customer.dashboard');
-        })->name('customer.dashboard');
+    Route::prefix('customer_panel')->group(function () {
+        Route::get('login', [CustomerAuthController::class, 'showLoginForm'])->name('customer.login');
+        Route::post('login', [CustomerAuthController::class, 'login'])->name('customer.login.submit');
+        Route::get('register', [CustomerAuthController::class, 'showRegistrationForm'])->name('customer.register');
+        Route::post('register', [CustomerAuthController::class, 'register'])->name('customer.register.submit');
+        Route::post('logout', [CustomerAuthController::class, 'logout'])->name('customer.logout');
+        
+        // Protected customer routes
+        Route::middleware('auth:customer')->group(function () {
+            Route::get('/dashboard', function () {
+                return view('customer.dashboard');
+            })->name('customer_panel.dashboard');
+        });
     });
-});
 
 
 

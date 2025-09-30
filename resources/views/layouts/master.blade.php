@@ -72,9 +72,33 @@
                                             </div><!-- End .header-menu -->
                                         </div><!-- End .header-dropdown -->
                                     </li>
-                                    <li class="login">
-                                        <a href="#signin-modal" data-toggle="modal">Sign in / Sign up</a>
+                                   
+                            @guest('customer')
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('customer.login') }}">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('customer.register') }}">Register</a>
+                                </li>
+                            @else
+                                <!-- Authenticated Links -->
+                                 <li>   
+                                        <div class="header-dropdown">
+                                            <a href="#">{{ Auth::guard('customer')->user()->name }}</a>
+                                            <div class="header-menu">
+                                                <ul>
+                                                    <li><a href="{{ route('customer_panel.dashboard') }}">Dashboard</a></li>
+                                                    <li><form method="POST" action="{{ route('customer.logout') }}">
+                                                            @csrf
+                                                            <button type="submit" class="dropdown-item">Logout</button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div><!-- End .header-menu -->
+                                        </div><!-- End .header-dropdown -->
                                     </li>
+                                
+                            @endguest
                                 </ul>
                             </li>
                         </ul><!-- End .top-menu -->
