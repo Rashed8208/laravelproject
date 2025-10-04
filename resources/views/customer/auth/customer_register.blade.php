@@ -54,25 +54,31 @@
                             </div>
                         </div>
                          <div class="form-group row mb-3">
-                            <label for="district" class="col-md-4 col-form-label text-md-right">District</label>
+                            <label for="district" class="col-md-4 col-form-label text-md-right">City</label>
                             <div class="col-md-6">
-                                <input id="district" type="text" class="form-control @error('district') is-invalid @enderror" name="city" value="{{ old('district') }}" required autocomplete="district">
-                                @error('district')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <select name="city" class="form-select form-control" id="division" onchange="fetchDistricts(this.value)">
+                                    <option selected>Select your city</option>
+                                    @foreach($divisions as $division)
+                                        <option value="{{ $division->id }}">{{ $division->name }}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('city'))
+                                    <span class="text-danger"> {{ $errors->first('city') }}</span>
+                                @endif
                             </div>
                         </div>
                          <div class="form-group row mb-3">
-                            <label for="city" class="col-md-4 col-form-label text-md-right">City</label>
+                            <label for="city" class="col-md-4 col-form-label text-md-right">District</label>
                             <div class="col-md-6">
-                                <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ old('city') }}" required autocomplete="city">
-                                @error('city')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <select name="district" class="form-select form-control" id="district">
+                                    <option selected>Select your district</option>
+                                    @foreach($districts as $district)
+                                        <option class="dist dist{{$district->division_id}}" value="{{ $district->id }}">{{ $district->name }}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('district'))
+                                    <span class="text-danger"> {{ $errors->first('district') }}</span>
+                                @endif
                             </div>
                         </div>
                         <div class="form-group row mb-3">
@@ -115,3 +121,17 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script>
+
+    function fetchDistricts(divisionId) {
+        // Hide all districts
+        document.querySelectorAll('.dist').forEach(function(el) {
+            el.style.display = 'none';
+        });
+        // Show districts that belong to the selected division
+        document.querySelectorAll('.dist' + divisionId).forEach(function(el) {
+            el.style.display = 'block';
+        });
+    }
+@endpush

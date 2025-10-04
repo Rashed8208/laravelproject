@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Devfaysal\BangladeshGeocode\Models\Division;
+use Devfaysal\BangladeshGeocode\Models\District;
+use App\Models\customer;
 
 class CustomerAuthController extends Controller
 {
@@ -32,7 +35,9 @@ class CustomerAuthController extends Controller
     }
 
     public function showRegistrationForm(){
-        return view('customer.auth.customer_register');
+        $districts=District::get();
+        $divisions=Division::get();
+        return view('customer.auth.customer_register',compact('districts','divisions'));
     }
 
     public function logout(){
@@ -45,11 +50,9 @@ class CustomerAuthController extends Controller
     $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:customers,email',
-        'password' => 'required|string|min:8|confirmed',
+        'password' => 'required|string|min:4|confirmed',
         'phone' => 'required|string|max:20',
         'address' => 'required|string|max:255',
-        'city' => 'required|string|max:100',
-        'district' => 'required|string|max:100',
         'post_code' => 'required|string|max:20',
     ]);
 
@@ -70,5 +73,5 @@ class CustomerAuthController extends Controller
 
     return redirect()->route('customer_panel.dashboard');
 }
-    
+
 }

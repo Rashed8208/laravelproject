@@ -17,6 +17,9 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 // customer
 use App\Http\Controllers\Customer\CustomerAuthController;
+use App\Http\Controllers\Customer\CustomerDashboardController;
+use App\Http\Controllers\Customer\CustomerOrderController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,7 +59,7 @@ use App\Http\Controllers\Customer\CustomerAuthController;
       Route:: resource('notification',NotificationController::class);
       Route:: resource('review',ReviewController::class);
       Route:: resource('coupon',CouponController::class);
-      
+
       });
       // Customer Authentication Routes
     Route::prefix('customer_panel')->group(function () {
@@ -65,12 +68,11 @@ use App\Http\Controllers\Customer\CustomerAuthController;
         Route::get('register', [CustomerAuthController::class, 'showRegistrationForm'])->name('customer.register');
         Route::post('register', [CustomerAuthController::class, 'register'])->name('customer.register.submit');
         Route::post('logout', [CustomerAuthController::class, 'logout'])->name('customer.logout');
-        
+
         // Protected customer routes
         Route::middleware('auth:customer')->group(function () {
-            Route::get('/dashboard', function () {
-                return view('customer.dashboard');
-            })->name('customer_panel.dashboard');
+            Route::get('dashboard', [CustomerDashboardController::class, 'index'])->name('customer_panel.dashboard');
+            Route:: resource('order',CustomerOrderController::class, ['as' => 'customer_panel']);
         });
     });
 

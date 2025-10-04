@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Devfaysal\BangladeshGeocode\Models\Division;
+use Devfaysal\BangladeshGeocode\Models\District;
 
 class order extends Model
 {
@@ -15,5 +17,14 @@ class order extends Model
     }
     public function items(){
         return $this->hasMany(order_item::class);
+    }
+    public function division(){
+        return $this->belongsTo(Division::class);
+    }
+    public function district(){
+        return $this->belongsTo(District::class);
+    }
+    public function coupon(){
+        return $this->belongsTo(coupon::class);
     }
 }
