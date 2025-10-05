@@ -37,4 +37,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
         });
     }
+
+   public function boot()
+{
+    parent::boot();
+
+    Route::model('order', Order::class);
+}
 }

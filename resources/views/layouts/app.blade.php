@@ -88,7 +88,7 @@
                             {{ Auth::guard('customer')->user()->name }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('customer.dashboard') }}">Dashboard</a>
+                            <a class="dropdown-item" href="{{ route('customer_panel.dashboard') }}">Dashboard</a>
                             <form method="POST" action="{{ route('customer.logout') }}">
                                 @csrf
                                 <button type="submit" class="dropdown-item">Logout</button>

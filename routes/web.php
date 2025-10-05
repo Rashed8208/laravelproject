@@ -19,7 +19,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Customer\CustomerAuthController;
 use App\Http\Controllers\Customer\CustomerDashboardController;
 use App\Http\Controllers\Customer\CustomerOrderController;
-
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -74,6 +74,19 @@ use App\Http\Controllers\Customer\CustomerOrderController;
             Route::get('dashboard', [CustomerDashboardController::class, 'index'])->name('customer_panel.dashboard');
             Route:: resource('order',CustomerOrderController::class, ['as' => 'customer_panel']);
         });
+
+    
+
+     Route::get('customer_panel/checkout/{order}', [CheckoutController::class, 'show'])->name('checkout');
+
+        Route::post('/pay', [PaymentController::class, 'pay'])->name('order.pay');
+
+        // SSLCommerz callback routes
+        Route::post('/ssl/success', [PaymentController::class, 'success'])->name('ssl.success');
+        Route::post('/ssl/fail', [PaymentController::class, 'sslFail'])->name('ssl.fail');
+        Route::post('/ssl/cancel', [PaymentController::class, 'sslCancel'])->name('ssl.cancel');
+        Route::post('/ssl/ipn', [PaymentController::class, 'sslIPN'])->name('ssl.ipn');
+
     });
 
 
