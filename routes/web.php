@@ -73,11 +73,15 @@ use App\Http\Controllers\PaymentController;
         Route::middleware('auth:customer')->group(function () {
             Route::get('dashboard', [CustomerDashboardController::class, 'index'])->name('customer_panel.dashboard');
             Route:: resource('order',CustomerOrderController::class, ['as' => 'customer_panel']);
+            
         });
 
     
 
-     Route::get('customer_panel/checkout/{order}', [CheckoutController::class, 'show'])->name('checkout');
+      Route::get('customer_panel/customer_panel/checkout', [CheckoutController::class, 'checkout'])
+           ->name('checkout');
+
+
 
         Route::post('/pay', [PaymentController::class, 'pay'])->name('order.pay');
 

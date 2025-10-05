@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Order; // ✅ Add this import
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -24,10 +25,17 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        parent::boot(); // ✅ Keep this call
+
+        // ✅ Route model binding for Order
+        Route::model('order', Order::class);
+
+        // ✅ Rate limiter configuration
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
 
+        // ✅ Define web and API routes
         $this->routes(function () {
             Route::middleware('api')
                 ->prefix('api')
@@ -37,11 +45,4 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
         });
     }
-
-   public function boot()
-{
-    parent::boot();
-
-    Route::model('order', Order::class);
-}
 }
