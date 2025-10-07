@@ -80,10 +80,21 @@ use App\Http\Controllers\PaymentController;
         Route::middleware('auth:customer')->group(function () {
             Route::get('dashboard', [CustomerDashboardController::class, 'index'])->name('customer_panel.dashboard');
             Route:: resource('order',CustomerOrderController::class, ['as' => 'customer_panel']);
+            
         });
 
     
 
+<<<<<<< HEAD
+=======
+      Route::get('customer_panel/customer_panel/checkout', [CheckoutController::class, 'checkout'])
+           ->name('checkout');
+
+
+
+        Route::post('/pay', [PaymentController::class, 'pay'])->name('order.pay');
+
+>>>>>>> 9b8691639e0dfd5a5baf1ff4406afafe19a49bcc
         // SSLCommerz callback routes
         Route::post('/ssl/success', [PaymentController::class, 'success'])->name('ssl.success');
         Route::post('/ssl/fail', [PaymentController::class, 'sslFail'])->name('ssl.fail');
