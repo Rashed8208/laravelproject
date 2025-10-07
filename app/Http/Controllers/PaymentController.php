@@ -4,117 +4,132 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
-use Raziul\Sslcommerz\Facades\Sslcommerz;  // or whatever facade your package provides
+use Raziul\Sslcommerz\Facades\Sslcommerz; // SSLCommerz package facade
 
 class PaymentController extends Controller
 {
-    // Show checkout page where payment method is selected
+    
     public function checkout(Order $order)
     {
-        // pass the order to view
         return view('checkout', compact('order'));
     }
 
-    // Handle form submission for payment method
+    
     public function pay(Request $request)
     {
         $request->validate([
             'order_id' => 'required|exists:orders,id',
-            'payment_method' => 'required|in:sslcommerz,cod',
+            'amount' => 'required|numeric|min:1',
         ]);
 
         $order = Order::findOrFail($request->order_id);
 
-        if ($request->payment_method == 'cod') {
-            // Cash on Delivery
-            $order->status = 'pending_cod';  // or whatever you use
-            $order->payment_method = 'cod';
+        
+        $amount = $order->final_price ?? $request->amount;
+        $tran_id = 'TRX_' . uniqid(); 
+
+        
+        $customer = [
+            'name' => $order->customer->name ?? 'Guest Customer',
+            'email' => $order->customer->email ?? 'guest@example.com',
+            'phone' => $order->customer->phone ?? '01700000000',
+            'address1' => $order->customer->address ?? 'Dhaka',
+        ];
+
+        
+        $payment = Sslcommerz::initPayment([
+            'total_amount' => $amount,
+            'tran_id' => $tran_id,
+            'cus_name' => $customer['name'],
+            'cus_email' => $customer['email'],
+            'cus_phone' => $customer['phone'],
+            'cus_add1' => $customer['address1'],
+            'value_a' => $order->id, // Custom value — pass order ID
+            'success_url' => route('ssl.success'),
+            'fail_url' => route('ssl.fail'),
+            'cancel_url' => route('ssl.cancel'),
+            'ipn_url' => route('ssl.ipn'),
+        ]);
+
+        if ($payment && isset($payment['GatewayPageURL'])) {
+            
+            $order->transaction_id = $tran_id;
+            $order->status = 'pending';
+            $order->payment_method = 'sslcommerz';
             $order->save();
 
-            return redirect()->route('order.success')->with('success', 'Order placed. You pay on delivery.');
+            
+            return redirect($payment['GatewayPageURL']);
         }
-        else {  
-            // SSLCommerz flow
-            $amount = $order->final_price;  // or however you compute
-            // prepare customer details
-            $customer = [
-                'name' => $order->customer->name,
-                'email' => $order->customer->email,
-                'phone' => $order->customer->phone,
-                'address1' => $order->customer->address,
-                // more if required
-            ];
 
-            $response = Sslcommerz::setOrder($amount, $order->id, "Payment for Order #" . $order->id)
-                          ->setCustomer($customer['name'], $customer['email'], $customer['phone'])
-                          ->setShippingInfo(0, $customer['address1'])
-                          ->makePayment();
-
-            if ($response->success()) {
-                return redirect($response->gatewayPageURL());
-            }
-            else {
-                return back()->with('error', 'Unable to initiate payment');
-            }
-        }
+        return back()->with('error', 'Unable to initiate SSLCommerz payment.');
     }
 
-    // SSLCommerz Callbacks
+    
+    
 
     public function success(Request $request)
     {
-        // SSLCommerz sends data here
         $tran_id = $request->input('tran_id');
-        $amount = $request->input('amount');
+        $order_id = $request->input('value_a');
 
-        // validate payment
-        if (Sslcommerz::validatePayment($request->all(), $tran_id, $amount)) {
-            $order = Order::findOrFail($request->input('value_a') ?? $request->order_id);
+        $order = Order::findOrFail($order_id);
+
+        if (Sslcommerz::validatePayment($request->all(), $tran_id, $order->final_price)) {
             $order->status = 'paid';
-            $order->payment_method = 'sslcommerz';
             $order->transaction_id = $tran_id;
             $order->save();
 
-            return redirect()->route('order.success')->with('success', 'Payment successful');
+            return redirect()->route('order.success')->with('success', 'Payment successful.');
         }
-        else {
-            return redirect()->route('order.failed')->with('error', 'Validation failed');
-        }
+
+        return redirect()->route('order.failed')->with('error', 'Payment validation failed.');
     }
 
-    public function sslFail(Request $request)
+    
+    public function fail(Request $request)
     {
-        // when payment fails
-        $order = Order::findOrFail($request->input('order_id'));
-        $order->status = 'payment_failed';
-        $order->save();
+        $order = Order::find($request->input('value_a'));
 
-        return redirect()->route('order.failed')->with('error', 'Payment failed');
-    }
-
-    public function sslCancel(Request $request)
-    {
-        // when user cancels
-        $order = Order::findOrFail($request->input('order_id'));
-        $order->status = 'payment_cancelled';
-        $order->save();
-
-        return redirect()->route('order.cancelled')->with('error', 'Payment cancelled');
-    }
-
-    public function sslIPN(Request $request)
-    {
-        // IPN flow from SSLCommerz (server to server)
-        if (Sslcommerz::validatePayment($request->all(), $request->input('tran_id'), $request->input('amount'))) {
-            $order = Order::findOrFail($request->input('order_id'));
-            $order->status = 'paid';
-            $order->payment_method = 'sslcommerz';
-            $order->transaction_id = $request->input('tran_id');
+        if ($order) {
+            $order->status = 'failed';
             $order->save();
-            // respond OK
-            return response('IPN OK', 200);
-        } else {
-            return response('IPN Validation Failed', 400);
         }
+
+        return redirect()->route('order.failed')->with('error', 'Payment failed.');
+    }
+
+   
+    public function cancel(Request $request)
+    {
+        $order = Order::find($request->input('value_a'));
+
+        if ($order) {
+            $order->status = 'cancelled';
+            $order->save();
+        }
+
+        return redirect()->route('order.cancelled')->with('error', 'Payment cancelled by user.');
+    }
+
+    public function ipn(Request $request)
+    {
+        $tran_id = $request->input('tran_id');
+        $order_id = $request->input('value_a');
+        $order = Order::find($order_id);
+
+        if (!$order) {
+            return response('Order not found', 404);
+        }
+
+        if (Sslcommerz::validatePayment($request->all(), $tran_id, $order->final_price)) {
+            $order->status = 'paid';
+            $order->transaction_id = $tran_id;
+            $order->save();
+
+            return response('IPN OK', 200);
+        }
+
+        return response('IPN Validation Failed', 400);
     }
 }

@@ -46,6 +46,13 @@ use App\Http\Controllers\PaymentController;
       Route::post('cart/check_coupon',[CartController::class,'checkCoupon'])->name('cart.check_coupon');
       Route::get('checkout',[CheckoutController::class, 'checkout'])->name('checkout');
       Route::post('checkout/place_order',[CheckoutController::class,'placeOrder'])->name('checkout.place_order');
+      
+    
+    //   Route::get('/checkout/{order}', [CheckoutController::class, 'checkout'])->name('checkout');
+      Route::get('customer_panel/customer_panel/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+        Route::post('/pay', [PaymentController::class, 'pay'])->name('order.pay');
+
+
 
       Auth::routes();
       Route::middleware('auth:web')->group(function(){
@@ -62,7 +69,7 @@ use App\Http\Controllers\PaymentController;
 
       });
       // Customer Authentication Routes
-    Route::prefix('customer_panel')->group(function () {
+        Route::prefix('customer_panel')->group(function () {
         Route::get('login', [CustomerAuthController::class, 'showLoginForm'])->name('customer.login');
         Route::post('login', [CustomerAuthController::class, 'login'])->name('customer.login.submit');
         Route::get('register', [CustomerAuthController::class, 'showRegistrationForm'])->name('customer.register');
@@ -76,10 +83,6 @@ use App\Http\Controllers\PaymentController;
         });
 
     
-
-     Route::get('customer_panel/checkout/{order}', [CheckoutController::class, 'show'])->name('checkout');
-
-        Route::post('/pay', [PaymentController::class, 'pay'])->name('order.pay');
 
         // SSLCommerz callback routes
         Route::post('/ssl/success', [PaymentController::class, 'success'])->name('ssl.success');
