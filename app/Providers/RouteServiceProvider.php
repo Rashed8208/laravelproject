@@ -25,17 +25,16 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        parent::boot(); // ✅ Keep this call
+        parent::boot(); 
 
-        // ✅ Route model binding for Order
+    
         Route::model('order', Order::class);
 
-        // ✅ Rate limiter configuration
+        
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
 
-        // ✅ Define web and API routes
         $this->routes(function () {
             Route::middleware('api')
                 ->prefix('api')
