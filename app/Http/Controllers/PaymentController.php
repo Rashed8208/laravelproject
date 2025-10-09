@@ -8,13 +8,11 @@ use Raziul\Sslcommerz\Facades\Sslcommerz; // SSLCommerz package facade
 
 class PaymentController extends Controller
 {
-    
     public function checkout(Order $order)
     {
         return view('checkout', compact('order'));
     }
 
-    
     public function pay(Request $request)
     {
         $request->validate([
@@ -24,11 +22,9 @@ class PaymentController extends Controller
 
         $order = Order::findOrFail($request->order_id);
 
-        
         $amount = $order->final_price ?? $request->amount;
-        $tran_id = 'TRX_' . uniqid(); 
+        $tran_id = 'TRX_' . uniqid();
 
-        
         $customer = [
             'name' => $order->customer->name ?? 'Guest Customer',
             'email' => $order->customer->email ?? 'guest@example.com',
@@ -36,7 +32,6 @@ class PaymentController extends Controller
             'address1' => $order->customer->address ?? 'Dhaka',
         ];
 
-        
         $payment = Sslcommerz::initPayment([
             'total_amount' => $amount,
             'tran_id' => $tran_id,
@@ -44,7 +39,7 @@ class PaymentController extends Controller
             'cus_email' => $customer['email'],
             'cus_phone' => $customer['phone'],
             'cus_add1' => $customer['address1'],
-            'value_a' => $order->id, // Custom value — pass order ID
+            'value_a' => $order->id,
             'success_url' => route('ssl.success'),
             'fail_url' => route('ssl.fail'),
             'cancel_url' => route('ssl.cancel'),
@@ -52,42 +47,37 @@ class PaymentController extends Controller
         ]);
 
         if ($payment && isset($payment['GatewayPageURL'])) {
-            
             $order->transaction_id = $tran_id;
             $order->status = 'pending';
             $order->payment_method = 'sslcommerz';
             $order->save();
 
-            
             return redirect($payment['GatewayPageURL']);
         }
 
         return back()->with('error', 'Unable to initiate SSLCommerz payment.');
     }
 
-    
-    
-
+    // These methods now return views
     public function success(Request $request)
     {
         $tran_id = $request->input('tran_id');
         $order_id = $request->input('value_a');
 
-        $order = Order::findOrFail($order_id);
+        $order = Order::find($order_id);
 
-        if (Sslcommerz::validatePayment($request->all(), $tran_id, $order->final_price)) {
+        if ($order && Sslcommerz::validatePayment($request->all(), $tran_id, $order->final_price)) {
             $order->status = 'paid';
             $order->transaction_id = $tran_id;
             $order->save();
 
-            return redirect()->route('order.success')->with('success', 'Payment successful.');
+            return view('sslcommerz.success', compact('order'));
         }
 
-        return redirect()->route('order.failed')->with('error', 'Payment validation failed.');
+        return view('sslcommerz.fail', ['error' => 'Payment validation failed']);
     }
 
-    
-    public function fail(Request $request)
+    public function sslFail(Request $request)
     {
         $order = Order::find($request->input('value_a'));
 
@@ -96,11 +86,10 @@ class PaymentController extends Controller
             $order->save();
         }
 
-        return redirect()->route('order.failed')->with('error', 'Payment failed.');
+        return view('sslcommerz.fail', compact('order'));
     }
 
-   
-    public function cancel(Request $request)
+    public function sslCancel(Request $request)
     {
         $order = Order::find($request->input('value_a'));
 
@@ -109,7 +98,7 @@ class PaymentController extends Controller
             $order->save();
         }
 
-        return redirect()->route('order.cancelled')->with('error', 'Payment cancelled by user.');
+        return view('sslcommerz.cancel', compact('order'));
     }
 
     public function ipn(Request $request)
