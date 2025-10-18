@@ -21,7 +21,7 @@ use App\Http\Controllers\Customer\CustomerAuthController;
 use App\Http\Controllers\Customer\CustomerDashboardController;
 use App\Http\Controllers\Customer\CustomerOrderController;
 use App\Http\Controllers\PaymentController;
-
+use App\Http\Controllers\SslCommerzPaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,14 +53,19 @@ Route::post('cart/check_coupon', [CartController::class, 'checkCoupon'])->name('
 // ✅ If your checkout requires an Order model binding:
 Route::get('checkout/{order?}', [CheckoutController::class, 'checkout'])->name('checkout');
 Route::post('checkout/place_order', [CheckoutController::class, 'placeOrder'])->name('checkout.place_order');
+// SSLCOMMERZ Start
+Route::get('/checkout', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
+Route::get('/checkout2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
 
-// ✅ SSLCommerz Payment Routes
-Route::post('/pay', [PaymentController::class, 'pay'])->name('order.pay');
-Route::post('/ssl/success', [PaymentController::class, 'success'])->name('ssl.success');
-Route::post('/ssl/fail', [PaymentController::class, 'sslFail'])->name('ssl.fail');
-Route::post('/ssl/cancel', [PaymentController::class, 'sslCancel'])->name('ssl.cancel');
-Route::post('/ssl/ipn', [PaymentController::class, 'sslIPN'])->name('ssl.ipn');
+Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
 
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
 // ===================== Admin Routes =====================
 Auth::routes();
 

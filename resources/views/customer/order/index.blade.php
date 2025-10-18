@@ -12,6 +12,7 @@
             <tr>
                 <th>ID</th>
                 <th>Coupon</th>
+                <th>Transaction ID</th>
                 <th>Status</th>
                 <th>Discount Amount</th>
                 <th>Total Price</th>
@@ -28,6 +29,7 @@
                 <tr>
                     <td>{{ $d->id }}</td>
                     <td>{{ $d->coupon?->code }}</td>
+                    <td>{{ $d->transaction_id }}</td>
                     <td>{{ $d->status }}</td>
                     <td>{{ $d->discount_amount }}</td>
                     <td>{{ $d->total_price }}</td>

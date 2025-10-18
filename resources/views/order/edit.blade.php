@@ -14,6 +14,10 @@
             <label>Coupon ID</label>
             <input type="number" name="coupon_id" class="form-control" value="{{ $order->coupon_id }}">
         </div>
+         <div class="form-group mb-2">
+            <label>Transaction ID</label>
+            <input type="number" name="Transaction_id" class="form-control" value="{{ $order->Transaction_id }}">
+        </div>
 
         <div class="form-group mb-2">
             <label>Customer ID</label>

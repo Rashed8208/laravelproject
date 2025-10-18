@@ -13,7 +13,10 @@
             <label>Coupon ID</label>
             <input type="number" name="coupon_id" class="form-control">
         </div>
-
+           <div class="form-group mb-2">
+            <label>Transaction ID</label>
+            <input type="number" name="transaction_id" class="form-control">
+        </div>
         <div class="form-group mb-2">
             <label>Customer ID</label>
             <input type="number" name="customer_id" class="form-control" required>

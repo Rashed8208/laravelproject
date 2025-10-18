@@ -10,7 +10,7 @@ use Devfaysal\BangladeshGeocode\Models\District;
 class order extends Model
 {
     use HasFactory;
-    protected $fillable=['coupon_id', 'customer_id', 'status', 'discount_amount', 'total_price', 'final_price', 'district_id', 'division_id', 'notes', 'address',];
+    protected $fillable=['coupon_id','transaction_id', 'customer_id', 'status', 'discount_amount', 'total_price', 'final_price', 'district_id', 'division_id', 'notes', 'address',];
 
     public function customer(){
         return $this->belongsTo(customer::class);
